@@ -7,11 +7,12 @@ public class Interface extends JFrame /*implements ActionListener*/ {
     JPanel panel = new JPanel();
     //private static final String[] BUTTONVALUE = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
     JButton[] button = new JButton[15];
+    JButton emptySpace= new JButton();
 
 
     Interface() {
         //FRAME
-        //todo add title
+        setTitle("Fifteen Puzzle Game");
         setSize(400, 400);
         setResizable(false);
         panel.setLayout(new GridLayout(4, 4));
@@ -31,6 +32,8 @@ public class Interface extends JFrame /*implements ActionListener*/ {
             this.button[i].setBorder(new LineBorder(Color.RED, 2));
             panel.add(this.button[i]);
         }
+
+        panel.add(emptySpace);
 
 
 
