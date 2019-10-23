@@ -1,10 +1,5 @@
 public class TestClass {
     public static void main(String[] args) {
-        System.out.println("test");
-        System.out.println("testA");
-        System.out.println("test3");
-        System.out.println("test4");
-        System.out.println("test5");
-        System.out.println("test6");
+        //Hej, Hej
     }
 }
