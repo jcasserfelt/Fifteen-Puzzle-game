@@ -18,7 +18,7 @@ public class Interface extends JFrame /*implements ActionListener*/ {
         panel.setLayout(new GridLayout(4, 4));
         setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE); 
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         add(panel);
         //PANEL
