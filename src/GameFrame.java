@@ -64,14 +64,29 @@ public class GameFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-
     }
+
+    private void swapwithNeibour(JButton b) {
+        String tempString = "";
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(board[i][j].getText().equals(b.getText())){
+                    tempString = board[i][j-1].getText();
+                    board[i][j-1].setText(b.getText());
+                    b.setText(tempString);
+
+                }
+            }
+        }
+    }
+
+    // this one is used for the mouse click
     MouseAdapter m1 = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             JButton tempButton = (JButton) e.getComponent();
+            swapwithNeibour(tempButton);
             System.out.println(tempButton.getText().toString());
 
 
