@@ -106,8 +106,6 @@ public class GameFrame extends JFrame implements ActionListener {
             JButton tempButton = (JButton) e.getComponent();
             swapwithNeibour(tempButton);
             System.out.println(tempButton.getText().toString());
-
-
         }
     };
 }
