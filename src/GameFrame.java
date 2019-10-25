@@ -93,35 +93,35 @@ public class GameFrame extends JFrame implements ActionListener {
                     JButton tempB = b;
                 }
                 // to the left to the left
-                if (iKlick == i0 && jKlick == j0 - 1) {
+                if ((iKlick == i0) && (jKlick == j0 - 1)) {
                     tempString = board[i0][j0].getText();
                     board[i0][j0].setText(board[iKlick][jKlick].getText());
                     board[iKlick][jKlick].setText(tempString);
                 }
                 // to the right to the right
-                if (iKlick == i0 && jKlick == j0 + 1) {
+                else if ((iKlick == i0) && (jKlick == j0 + 1)) {
                     tempString = board[i0][j0].getText();
                     board[i0][j0].setText(board[iKlick][jKlick].getText());
                     board[iKlick][jKlick].setText(tempString);
                 }
                 // up
-                if (iKlick == i0 + 1 && jKlick == j0) {
+                else if ((iKlick == i0 + 1) && (jKlick == j0)) {
                     tempString = board[i0][j0].getText();
                     board[i0][j0].setText(board[iKlick][jKlick].getText());
                     board[iKlick][jKlick].setText(tempString);
                 }
                 // down
-                if (iKlick == i0 - 1 && jKlick == j0) {
+                else if ((iKlick == i0 - 1) && (jKlick == j0)) {
                     tempString = board[i0][j0].getText();
                     board[i0][j0].setText(board[iKlick][jKlick].getText());
                     board[iKlick][jKlick].setText(tempString);
-
                 }
+                swapwithNeibour();
             }
         }
     }
 
-    private void swapwithNeibour(JButton b) {
+    private void swapwithNeibour() {
         /*String tempString = "";
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -133,10 +133,11 @@ public class GameFrame extends JFrame implements ActionListener {
                     if (board[i][j - 1].getText().equals("0")) {
                         b.setVisible(false);
                         board[i][j - 1].setVisible(true);
-                    }*/
+                    }
                 }
             }
         }
+        */
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (board[i][j].getText().equals("0")) {
@@ -152,8 +153,8 @@ public class GameFrame extends JFrame implements ActionListener {
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             JButton tempButton = (JButton) e.getComponent();
-            swapwithNeibour(tempButton);
-            System.out.println(tempButton.getText().toString());
+            makeAMove(tempButton);
+            System.out.println(tempButton.getText());
         }
     };
 }
