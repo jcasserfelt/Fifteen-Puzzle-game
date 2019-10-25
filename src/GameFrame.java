@@ -11,6 +11,10 @@ public class GameFrame extends JFrame implements ActionListener {
 
     int SIZE = 4;
     int SQUARESIZE = SIZE * SIZE;
+    int i0;
+    int j0;
+    int iKlick;
+    int jKlick;
     private JButton[][] board = new JButton[SIZE][SIZE];
     private JPanel panel = new JPanel();
 
@@ -73,8 +77,52 @@ public class GameFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     }
 
+    private void makeAMove(JButton b) {
+        String tempString;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (board[i][j].getText().equals("0")) {
+                    i0 = i;
+                    j0 = j;
+                    JButton blanc = board[i][j];
+                }
+                if (board[i][j].getText().equals(b.getText())) ;
+                {
+                    iKlick = i;
+                    jKlick = j;
+                    JButton tempB = b;
+                }
+                // to the left to the left
+                if (iKlick == i0 && jKlick == j0 - 1) {
+                    tempString = board[i0][j0].getText();
+                    board[i0][j0].setText(board[iKlick][jKlick].getText());
+                    board[iKlick][jKlick].setText(tempString);
+                }
+                // to the right to the right
+                if (iKlick == i0 && jKlick == j0 + 1) {
+                    tempString = board[i0][j0].getText();
+                    board[i0][j0].setText(board[iKlick][jKlick].getText());
+                    board[iKlick][jKlick].setText(tempString);
+                }
+                // up
+                if (iKlick == i0 + 1 && jKlick == j0) {
+                    tempString = board[i0][j0].getText();
+                    board[i0][j0].setText(board[iKlick][jKlick].getText());
+                    board[iKlick][jKlick].setText(tempString);
+                }
+                // down
+                if (iKlick == i0 - 1 && jKlick == j0) {
+                    tempString = board[i0][j0].getText();
+                    board[i0][j0].setText(board[iKlick][jKlick].getText());
+                    board[iKlick][jKlick].setText(tempString);
+
+                }
+            }
+        }
+    }
+
     private void swapwithNeibour(JButton b) {
-        String tempString = "";
+        /*String tempString = "";
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (board[i][j].getText().equals(b.getText())) {
@@ -82,7 +130,7 @@ public class GameFrame extends JFrame implements ActionListener {
                     board[i][j - 1].setText(b.getText());
                     b.setText(tempString);
                     // this does not work
-               /*     if (board[i][j - 1].getText().equals("0")) {
+                    if (board[i][j - 1].getText().equals("0")) {
                         b.setVisible(false);
                         board[i][j - 1].setVisible(true);
                     }*/
