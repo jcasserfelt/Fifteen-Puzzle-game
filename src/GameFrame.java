@@ -89,6 +89,13 @@ public class GameFrame extends JFrame implements ActionListener {
                 }
             }
         }
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (board[i][j].getText().equals("0")) {
+                    board[i][j].setVisible(false);
+                } else board[i][j].setVisible(true);
+            }
+        }
     }
 
     // this one is used for the mouse click
