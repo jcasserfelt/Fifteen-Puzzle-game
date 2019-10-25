@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class GameFrame extends JFrame implements ActionListener {
+public class GameFrame extends JFrame /*implements ActionListener*/ {
 
     int SIZE = 4;
     int SQUARESIZE = SIZE * SIZE;
@@ -17,6 +17,18 @@ public class GameFrame extends JFrame implements ActionListener {
     int jKlick = 0;
     private JButton[][] board = new JButton[SIZE][SIZE];
     private JPanel panel = new JPanel();
+
+    public static void main(String[] args) {
+        new GameFrame();
+    }
+
+    public GameFrame() {
+        initiateBoard();
+        manageLayout();
+        addButtons();  //det var rePaint!
+        // add(panel);
+
+    }
 
     public void initiateBoard() {
         // The list is used for create a shuffled order of 1-16
@@ -38,8 +50,8 @@ public class GameFrame extends JFrame implements ActionListener {
         }
     }
 
-    public GameFrame() {
-        initiateBoard();
+
+    public void manageLayout() {
         setTitle("Fifteen Puzzle Game");
         setSize(400, 400);
         setResizable(false);
@@ -48,34 +60,50 @@ public class GameFrame extends JFrame implements ActionListener {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         add(panel);
-        rePaint();
-        add(panel);
-
     }
 
+
     // maybe change name for this method, it doesnt really repaint the board
-    private void rePaint() {
+    private void addButtons() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 panel.add(board[i][j]);
-                if (board[i][j].getText().equals("0")) {
-                    board[i][j].setVisible(false);
-                } else {
-                    board[i][j].setVisible(true);
-                }
-                board[i][j].addActionListener(this);
+                hideZero(board, i, j);
+                //varför två listeners?
+                /*board[i][j].addActionListener(this);*/
                 board[i][j].addMouseListener(m1);
             }
         }
     }
 
-    public static void main(String[] args) {
-        new GameFrame();
+    private void hideZero (JButton board[][], int i, int j){
+        if (board[i][j].getText().equals("0")) {
+            board[i][j].setVisible(false);
+        } else {
+            board[i][j].setVisible(true);
+        }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private void addListeners(JButton board[][], int i, int j) {
+        /*board[i][j].addActionListener(this);*/
+        board[i][j].addMouseListener(m1);
     }
+
+
+   /* @Override
+    public void actionPerformed(ActionEvent e) {
+    }*/
+
+    // this one is used for the mouse click
+    MouseAdapter m1 = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            JButton tempButton = (JButton) e.getComponent();
+            makeAMove(tempButton);
+            //System.out.println(tempButton.getText());
+        }
+    };
 
     private void makeAMove(JButton b) {
         String tempString;
@@ -151,14 +179,4 @@ public class GameFrame extends JFrame implements ActionListener {
         }
     }
 
-    // this one is used for the mouse click
-    MouseAdapter m1 = new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
-            JButton tempButton = (JButton) e.getComponent();
-            makeAMove(tempButton);
-            //System.out.println(tempButton.getText());
-        }
-    };
 }
