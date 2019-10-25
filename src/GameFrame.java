@@ -44,18 +44,25 @@ public class GameFrame extends JFrame implements ActionListener {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         add(panel);
+        rePaint();
+        add(panel);
+
+    }
+
+    // maybe change name for this method, it doesnt really repaint the board
+    private void rePaint() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 panel.add(board[i][j]);
                 if (board[i][j].getText().equals("0")) {
                     board[i][j].setVisible(false);
+                } else {
+                    board[i][j].setVisible(true);
                 }
                 board[i][j].addActionListener(this);
                 board[i][j].addMouseListener(m1);
             }
         }
-        add(panel);
-
     }
 
     public static void main(String[] args) {
@@ -70,12 +77,23 @@ public class GameFrame extends JFrame implements ActionListener {
         String tempString = "";
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if(board[i][j].getText().equals(b.getText())){
-                    tempString = board[i][j-1].getText();
-                    board[i][j-1].setText(b.getText());
+                if (board[i][j].getText().equals(b.getText())) {
+                    tempString = board[i][j - 1].getText();
+                    board[i][j - 1].setText(b.getText());
                     b.setText(tempString);
-
+                    // this does not work
+               /*     if (board[i][j - 1].getText().equals("0")) {
+                        b.setVisible(false);
+                        board[i][j - 1].setVisible(true);
+                    }*/
                 }
+            }
+        }
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (board[i][j].getText().equals("0")) {
+                    board[i][j].setVisible(false);
+                } else board[i][j].setVisible(true);
             }
         }
     }
@@ -88,8 +106,6 @@ public class GameFrame extends JFrame implements ActionListener {
             JButton tempButton = (JButton) e.getComponent();
             swapwithNeibour(tempButton);
             System.out.println(tempButton.getText().toString());
-
-
         }
     };
 }
