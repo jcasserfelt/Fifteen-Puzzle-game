@@ -5,28 +5,24 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class GameFrame extends JFrame /*implements ActionListener*/ {
+
+public class GameFrame extends JFrame {
 
     int SIZE = 4;
     int SQUARESIZE = SIZE * SIZE;
-    /*int i0 = 0;
-    int j0 = 0;
-    int iKlick = 0;
-    int jKlick = 0;*/
     JButton newGame = new JButton("NEW GAME");
     private JButton[][] board = new JButton[SIZE][SIZE];
     private JPanel panel = new JPanel();
     private JPanel panel2 = new JPanel();
 
 
-//
     public GameFrame() {
         initiateBoard();
         manageLayout();
-        addButtons();  //det var rePaint!
-        // add(panel);
-
+        addButtons();
+        //väntefas: programmet går vidare från MouseEvents
     }
+
 
     public void initiateBoard() {
         // The list is used for create a shuffled order of 1-16
@@ -43,7 +39,6 @@ public class GameFrame extends JFrame /*implements ActionListener*/ {
             for (int j = 0; j < SIZE; j++) {
                 board[i][j] = new JButton(intialList.get(counter).toString());
                 board[i][j].setPreferredSize(new Dimension(100,100));
-
                 counter++;
             }
         }
@@ -64,12 +59,9 @@ public class GameFrame extends JFrame /*implements ActionListener*/ {
         add(panel2, BorderLayout.SOUTH );
         panel.setSize(400, 400);
         panel2.setSize(400,40);
-
-
     }
 
 
-    // maybe change name for this method, it doesnt really repaint the board
     private void addButtons() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -82,6 +74,7 @@ public class GameFrame extends JFrame /*implements ActionListener*/ {
         newGame.addMouseListener(m2);
     }
 
+
     private void hideZero (JButton board[][], int i, int j){
         if (board[i][j].getText().equals("0")) {
             board[i][j].setVisible(false);
@@ -91,30 +84,25 @@ public class GameFrame extends JFrame /*implements ActionListener*/ {
     }
 
 
-
-
-    MouseAdapter m1 = new MouseAdapter() {
+    MouseAdapter m1 = new MouseAdapter() {                  //MOVE
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             JButton tempButton = (JButton) e.getComponent();
             Move move = new Move(tempButton, board, SIZE);
-
         }
     };
-    MouseAdapter m2 = new MouseAdapter() {
+
+    MouseAdapter m2 = new MouseAdapter() {                  //NEW GAME
         @Override
         public void mouseClicked(MouseEvent e) {
             panel.removeAll();
             initiateBoard();
             manageLayout();
             addButtons();
-            //kanske bättre om vi stänger frame och använder new GameFrame();
-
+            //todo: kanske bättre om vi stänger frame och använder new GameFrame();
         }
     };
-
-
 
 
 }
