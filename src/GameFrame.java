@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class GameFrame extends JFrame implements ActionListener {
@@ -17,6 +18,7 @@ public class GameFrame extends JFrame implements ActionListener {
     int jKlick = 0;
     private JButton[][] board = new JButton[SIZE][SIZE];
     private JPanel panel = new JPanel();
+    String[] currentState = new String[16];
 
     public void initiateBoard() {
         // The list is used for create a shuffled order of 1-16
@@ -53,6 +55,17 @@ public class GameFrame extends JFrame implements ActionListener {
 
     }
 
+    private void getCurrentBoardOrder() {
+        int localCounter = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                currentState[localCounter] = board[i][j].getText();
+                localCounter++;
+            }
+        }
+        System.out.println(Arrays.toString(currentState));
+    }
+
     // maybe change name for this method, it doesnt really repaint the board
     private void rePaint() {
         for (int i = 0; i < SIZE; i++) {
@@ -81,7 +94,7 @@ public class GameFrame extends JFrame implements ActionListener {
         String tempString;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (board[i][j].getText().equals("0")){
+                if (board[i][j].getText().equals("0")) {
                     i0 = i;
                     j0 = j;
                     //JButton tempB = b;
@@ -158,6 +171,7 @@ public class GameFrame extends JFrame implements ActionListener {
             super.mouseClicked(e);
             JButton tempButton = (JButton) e.getComponent();
             makeAMove(tempButton);
+            getCurrentBoardOrder();
             //System.out.println(tempButton.getText());
         }
     };
