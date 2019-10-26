@@ -1,5 +1,5 @@
 public class TestClass {
     public static void main(String[] args) {
-        GameFrame gm = new GameFrame();
+        GameFrame gf = new GameFrame();
     }
 }

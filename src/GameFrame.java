@@ -13,8 +13,11 @@ public class GameFrame extends JFrame /*implements ActionListener*/ {
     int j0 = 0;
     int iKlick = 0;
     int jKlick = 0;*/
+    JButton newGame = new JButton("NEW GAME");
     private JButton[][] board = new JButton[SIZE][SIZE];
     private JPanel panel = new JPanel();
+    private JPanel panel2 = new JPanel();
+
 
 //
     public GameFrame() {
@@ -39,6 +42,7 @@ public class GameFrame extends JFrame /*implements ActionListener*/ {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 board[i][j] = new JButton(intialList.get(counter).toString());
+                board[i][j].setPreferredSize(new Dimension(100,100));
 
                 counter++;
             }
@@ -48,13 +52,20 @@ public class GameFrame extends JFrame /*implements ActionListener*/ {
 
     public void manageLayout() {
         setTitle("Fifteen Puzzle Game");
-        setSize(400, 400);
+        setSize(420,470);
+
         setResizable(false);
         panel.setLayout(new GridLayout(4, 4));
+        panel2.setLayout(new FlowLayout());
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        add(panel);
+        add(panel, BorderLayout.NORTH );
+        add(panel2, BorderLayout.SOUTH );
+        panel.setSize(400, 400);
+        panel2.setSize(400,40);
+
+
     }
 
 
@@ -64,11 +75,11 @@ public class GameFrame extends JFrame /*implements ActionListener*/ {
             for (int j = 0; j < SIZE; j++) {
                 panel.add(board[i][j]);
                 hideZero(board, i, j);
-                //varför två listeners?
-                /*board[i][j].addActionListener(this);*/
                 board[i][j].addMouseListener(m1);
             }
         }
+        panel2.add(newGame).setPreferredSize(new Dimension(200,20));
+        newGame.addMouseListener(m2);
     }
 
     private void hideZero (JButton board[][], int i, int j){
@@ -79,27 +90,30 @@ public class GameFrame extends JFrame /*implements ActionListener*/ {
         }
     }
 
-    private void addListeners(JButton board[][], int i, int j) {
-        /*board[i][j].addActionListener(this);*/
-        board[i][j].addMouseListener(m1);
-    }
 
 
-   /* @Override
-    public void actionPerformed(ActionEvent e) {
-    }*/
 
-    // this one is used for the mouse click
     MouseAdapter m1 = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             JButton tempButton = (JButton) e.getComponent();
             Move move = new Move(tempButton, board, SIZE);
-           // makeAMove(tempButton);
-            //System.out.println(tempButton.getText());
+
         }
     };
+    MouseAdapter m2 = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            panel.removeAll();
+            initiateBoard();
+            manageLayout();
+            addButtons();
+            //kanske bättre om vi stänger frame och använder new GameFrame();
+
+        }
+    };
+
 
 
 
