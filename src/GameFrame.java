@@ -12,8 +12,8 @@ public class GameFrame extends JFrame {
     int SQUARESIZE = SIZE * SIZE;
     JButton newGame = new JButton("NEW GAME");
     private JButton[][] board = new JButton[SIZE][SIZE];
-    private JPanel panel = new JPanel();
-    private JPanel panel2 = new JPanel();
+    private JPanel boardPanel = new JPanel();
+    private JPanel newGamePanel = new JPanel();
 
 
     public GameFrame() {
@@ -26,7 +26,7 @@ public class GameFrame extends JFrame {
 
     public void initiateBoard() {
         // The list is used for create a shuffled order of 1-16
-        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE);
+        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE); //kanske valueList?
         for (int i = 0; i < SQUARESIZE; i++) {
             intialList.add(i, i); // i, i is for index and value
         }
@@ -48,29 +48,28 @@ public class GameFrame extends JFrame {
     public void manageLayout() {
         setTitle("Fifteen Puzzle Game");
         setSize(420,470);
-
         setResizable(false);
-        panel.setLayout(new GridLayout(4, 4));
-        panel2.setLayout(new FlowLayout());
+        boardPanel.setLayout(new GridLayout(4, 4));
+        newGamePanel.setLayout(new FlowLayout());
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        add(panel, BorderLayout.NORTH );
-        add(panel2, BorderLayout.SOUTH );
-        panel.setSize(400, 400);
-        panel2.setSize(400,40);
+        add(boardPanel, BorderLayout.NORTH );
+        add(newGamePanel, BorderLayout.SOUTH );
+        boardPanel.setSize(400, 400);
+        newGamePanel.setSize(400,40);
     }
 
 
     private void addButtons() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                panel.add(board[i][j]);
+                boardPanel.add(board[i][j]);
                 hideZero(board, i, j);
                 board[i][j].addMouseListener(m1);
             }
         }
-        panel2.add(newGame).setPreferredSize(new Dimension(200,20));
+        newGamePanel.add(newGame).setPreferredSize(new Dimension(200,20));
         newGame.addMouseListener(m2);
     }
 
@@ -89,20 +88,21 @@ public class GameFrame extends JFrame {
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             JButton tempButton = (JButton) e.getComponent();
-            Move move = new Move(tempButton, board, SIZE);
+            Move move = new Move(tempButton, board, boardPanel, SIZE);
         }
     };
 
     MouseAdapter m2 = new MouseAdapter() {                  //NEW GAME
         @Override
         public void mouseClicked(MouseEvent e) {
-            panel.removeAll();
+            boardPanel.removeAll();
             initiateBoard();
             manageLayout();
             addButtons();
             //todo: kanske bättre om vi stänger frame och använder new GameFrame();
         }
     };
+
 
 
 }
