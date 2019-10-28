@@ -72,7 +72,7 @@ public class GameFrame extends JFrame {
         newGamePanel.add(newGame).setPreferredSize(new Dimension(200,20));
         newGame.addMouseListener(m2);
     }
-
+//ta bort
 
     private void hideZero (JButton board[][], int i, int j){
         if (board[i][j].getText().equals("0")) {
