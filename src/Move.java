@@ -40,7 +40,7 @@ public class Move {
            Vi skulle också kunna implementera fuskMode i programmet :)!
          */
         // to the left to the left
-        if ((iKlick == i0) && (jKlick == (j0 - 1)))
+       if ((iKlick == i0) && (jKlick == (j0 - 1)))
             replace();
         // to the right to the right
         else if ((iKlick == i0) && (jKlick == (j0 + 1)))
@@ -51,7 +51,7 @@ public class Move {
         // down
         else if ((iKlick == (i0 - 1)) && (jKlick == j0))
             replace();
-
+        
         /*else {
             //System.out.printf(" iKlick:\t%d\n jKlick:\t%d\n i0:\t\t%d\n j0:\t\t%d", iKlick, jKlick, i0, j0);
         }*/
