@@ -55,7 +55,7 @@ public class Move {
         /*else {
             //System.out.printf(" iKlick:\t%d\n jKlick:\t%d\n i0:\t\t%d\n j0:\t\t%d", iKlick, jKlick, i0, j0);
         }*/
-        swapwithNeibour();
+        refreshVisables();
         //todo nytt namn för metoden swapwithNeibour? Vi har redan swappat, det är bara en ny "hideZero"...
         //todo två metoder som gör samma sak...skulle man kunna använda bara en?
     }
@@ -68,7 +68,7 @@ public class Move {
 
     }
 
-    private void swapwithNeibour() {
+    private void refreshVisables() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (board[i][j].getText().equals("0")) {
