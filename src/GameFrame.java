@@ -10,11 +10,19 @@ public class GameFrame extends JFrame {
 
     int SIZE = 4;
     int SQUARESIZE = SIZE * SIZE;
+    ImageIcon git1 = new ImageIcon("C:\\Users\\ellenofelia\\Desktop\\east1.jpg");
+    ImageIcon git2 = new ImageIcon("C:\\Users\\ellenofelia\\Desktop\\west1.jpg");
+    JLabel east = new JLabel();
+    JLabel west = new JLabel();
     JButton newGame = new JButton("NEW GAME");
     private JButton[][] board = new JButton[SIZE][SIZE];
     private JPanel boardPanel = new JPanel();
     private JPanel newGamePanel = new JPanel();
+    private JPanel eastPanel = new JPanel();
+    private JPanel westPanel = new JPanel();
+    private JPanel northPanel = new JPanel();
 
+//-------------------------------------------------------------------------------------------------
 
     public GameFrame() {
         initiateBoard();
@@ -26,19 +34,17 @@ public class GameFrame extends JFrame {
 
     public void initiateBoard() {
         // The list is used for create a shuffled order of 1-16
-        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE); //kanske valueList?
+        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE);
         for (int i = 0; i < SQUARESIZE; i++) {
             intialList.add(i, i); // i, i is for index and value
         }
         // make the shuffle
         Collections.shuffle(intialList);
-
         // place JButtons in the board array with shuffled text(0-16) on them
         int counter = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 board[i][j] = new JButton(intialList.get(counter).toString());
-                board[i][j].setPreferredSize(new Dimension(100,100));
                 counter++;
             }
         }
@@ -47,17 +53,29 @@ public class GameFrame extends JFrame {
 
     public void manageLayout() {
         setTitle("Fifteen Puzzle Game");
-        setSize(420,470);
+        setSize(540,440);
         setResizable(false);
-        boardPanel.setLayout(new GridLayout(4, 4));
+        boardPanel.setLayout(new GridLayout(SIZE, SIZE));
         newGamePanel.setLayout(new FlowLayout());
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        add(boardPanel, BorderLayout.NORTH );
+        eastPanel.setSize(100, 440);
+        westPanel.setSize(100, 440);
+        add(boardPanel, BorderLayout.CENTER );
         add(newGamePanel, BorderLayout.SOUTH );
-        boardPanel.setSize(400, 400);
-        newGamePanel.setSize(400,40);
+        add(eastPanel, BorderLayout.EAST);
+        add(westPanel, BorderLayout.WEST);
+        add(northPanel, BorderLayout.NORTH);
+        eastPanel.setBackground(Color.black);
+        westPanel.setBackground(Color.black);
+        northPanel.setBackground(Color.black);
+        boardPanel.setBackground(Color.black);
+        newGamePanel.setBackground(Color.black);
+        east.setIcon(git1);
+        west.setIcon((git2));
+        eastPanel.add(east);
+        westPanel.add(west);
     }
 
 
@@ -69,10 +87,10 @@ public class GameFrame extends JFrame {
                 board[i][j].addMouseListener(m1);
             }
         }
-        newGamePanel.add(newGame).setPreferredSize(new Dimension(200,20));
+        newGamePanel.add(newGame).setPreferredSize(new Dimension(180,30));
         newGame.addMouseListener(m2);
     }
-//ta bort
+
 
     private void hideZero (JButton board[][], int i, int j){
         if (board[i][j].getText().equals("0")) {
