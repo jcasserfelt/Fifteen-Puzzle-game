@@ -1,9 +1,7 @@
-
 import javax.swing.*;
 
 public class Move {
 
-    JButton clicked;
     JButton[][] board;
     JPanel boardPanel;
     int i0, j0, iKlick, jKlick,SIZE;
@@ -12,83 +10,37 @@ public class Move {
             {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15","0"};
 
 
-    public Move(JButton clicked, JButton[][] board, JPanel boardPanel, int SIZE){
-        this.clicked = clicked;
+    public Move(JButton[][] board, JPanel boardPanel, int SIZE, int i0, int j0, int iKlick, int jklick, int kindOfMove){
         this.board = board;
         this.SIZE = SIZE;
         this.boardPanel = boardPanel;
+        this.kindOfMove = kindOfMove;
+        this.i0 = i0;
+        this.j0 = j0;
+        this.iKlick = iKlick;
+        this.jKlick = jklick;
         makeAMove();
     }
 
 
     public void makeAMove() {
-        setCheckPoints();
-        if (isMovePossible()) {
+
             if (kindOfMove == 1)
-                replace();     //singleMove
+                replace();                  //singleMove
             else if (kindOfMove == 2) {
-                doubleMove();
+                doubleMove();               //replace + replace
             }
-            else if (kindOfMove == 3) {
+            else if (kindOfMove == 3) {     //replace + doubleMove
                 tripleMove();
             }
-
             refreshVisables();
             if (isWinState())
                 showWinPanel();
-        }
+
     }
 
     //todo: fuskMode!
     //todo: hideZero, refreshVisible. Två metoder som gör samma sak...skulle man inte kunna använda bara en?
-
-
-    public void setCheckPoints(){
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (board[i][j].getText().equals("0")){
-                    i0 = i;
-                    j0 = j;
-                }
-                if (board[i][j].getText().equals(clicked.getText())) {
-                    iKlick = i;
-                    jKlick = j;
-                }
-            }
-        }
-    }
-
-
-    public boolean isMovePossible() {
-        if ((iKlick == i0) && (jKlick == (j0 - 1)) ||  //moveright
-            (iKlick == i0) && (jKlick == (j0 + 1)) ||  //moveleft
-            (iKlick == (i0 + 1)) && (jKlick == j0) ||  //moveupp
-            (iKlick == (i0 - 1)) && (jKlick == j0)) {  //moveDown
-            kindOfMove = 1;
-            System.out.println("Single move");
-            return true;
-        } else if
-           ((iKlick == i0) && (jKlick == (j0 - 2)) ||    //2right
-            (iKlick == i0) && (jKlick == (j0 + 2)) ||    //2left
-            (iKlick == (i0 + 2)) && (jKlick == j0) ||    //2up
-            (iKlick == (i0 - 2)) && (jKlick == j0)) {    //2down
-             kindOfMove = 2;
-             System.out.println("Double move");
-             return true;
-        } else if
-            ((iKlick == i0) && (jKlick == (j0 - 3)) ||    //3right
-             (iKlick == i0) && (jKlick == (j0 + 3)) ||    //3left
-             (iKlick == (i0 + 3)) && (jKlick == j0) ||    //3up
-             (iKlick == (i0 - 3)) && (jKlick == j0)) {    //3down
-              kindOfMove = 3;
-              System.out.println("Triple move");
-              return true;
-        }
-        return false;
-    }
-
-
-
 
     private void replace(){
         String tempString;

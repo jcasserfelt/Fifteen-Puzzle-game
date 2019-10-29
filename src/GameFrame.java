@@ -10,8 +10,8 @@ public class GameFrame extends JFrame {
 
     int SIZE = 4;
     int SQUARESIZE = SIZE * SIZE;
-    ImageIcon git1 = new ImageIcon("C:\\Users\\ellenofelia\\Desktop\\east1.jpg");
-    ImageIcon git2 = new ImageIcon("C:\\Users\\ellenofelia\\Desktop\\west1.jpg");
+    ImageIcon git1 = new ImageIcon("src\\east1.jpg");
+    ImageIcon git2 = new ImageIcon("src\\west1.jpg");
     JLabel east = new JLabel();
     JLabel west = new JLabel();
     JButton newGame = new JButton("NEW GAME");
@@ -106,7 +106,7 @@ public class GameFrame extends JFrame {
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             JButton clicked = (JButton) e.getComponent();
-            Move move = new Move(clicked, board, boardPanel, SIZE);
+            Check check = new Check(clicked, board, SIZE);
         }
     };
 
