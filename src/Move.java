@@ -1,56 +1,65 @@
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Move {
 
-    JButton b;
+    JButton clicked;
     JButton[][] board;
     JPanel boardPanel;
     int i0, j0, iKlick, jKlick,SIZE;
     private static final String[] WINSEQUENCE =
-    {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15","0"};
+            {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15","0"};
 
 
-    public Move(JButton b, JButton[][] board, JPanel boardPanel, int SIZE){
-        this.b = b;
+    public Move(JButton clicked, JButton[][] board, JPanel boardPanel, int SIZE){
+        this.clicked = clicked;
         this.board = board;
         this.SIZE = SIZE;
         this.boardPanel = boardPanel;
-        makeAMove(b);
+        makeAMove(clicked);
     }
 
-    //todo: andra metoder? SetNollPoint,  SetClickPoint?
-    private void makeAMove(JButton b) {
+
+    public void makeAMove(JButton clicked) {
+        setSwapPoints();
+        //if (isMovePossible()) {
+            replace();
+            refreshVisables();
+            if (isWinState())
+                showWinPanel();
+        //}
+    }
+    //todo: fuskMode!
+    //todo: hideZero, refreshVisible. Två metoder som gör samma sak...skulle man inte kunna använda bara en?
+
+
+    public void setSwapPoints(){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (board[i][j].getText().equals("0")){
                     i0 = i;
                     j0 = j;
                 }
-                if (board[i][j].getText().equals(b.getText())) {
+                if (board[i][j].getText().equals(clicked.getText())) {
                     iKlick = i;
                     jKlick = j;
                 }
             }
         }
-        /*todo: om vi tar bort de 4 if satserna, och kör replace direkt, do blir "FuskMode".
-           Det kan vara användbart för att testa WinState: puzzlet är väldigt ofta olösbart.
-           Vi skulle också kunna implementera fuskMode i programmet :)!
-         */
-
-        if ((iKlick == i0) && (jKlick == (j0 - 1)))
-            replace();// left
-        else if ((iKlick == i0) && (jKlick == (j0 + 1)))
-            replace();// right
-        else if ((iKlick == (i0 + 1)) && (jKlick == j0))
-            replace();// up
-        else if ((iKlick == (i0 - 1)) && (jKlick == j0))
-            replace();// down
-
-        refreshVisables();
-
-        //todo: hideZero, refreshVisible. Två metoder som gör samma sak...skulle man kunna använda bara en?
     }
+
+
+    public boolean isMovePossible(){
+        if ((iKlick == i0) && (jKlick == (j0 - 1)) ||    //left
+                (iKlick == i0) && (jKlick == (j0 + 1)) ||    //right
+                (iKlick == (i0 + 1)) && (jKlick == j0) ||    //down
+                (iKlick == (i0 - 1)) && (jKlick == j0))      //upp
+            return true;
+        else
+            return false;
+    }
+
 
     private void replace(){
         String tempString;
@@ -68,21 +77,21 @@ public class Move {
                 } else board[i][j].setVisible(true);
             }
         }
-        checkWinState();
     }
 
 
-    public void checkWinState(){
+    public boolean isWinState(){
         int counter = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (!(board[i][j].getText().equals(WINSEQUENCE[counter])))
-                    return;
+                    return false;
                 counter++;
             }
         }
-        showWinPanel();
+        return true;
     }
+
 
     public void showWinPanel(){
         boardPanel.removeAll();
@@ -94,4 +103,4 @@ public class Move {
     }
 
 
-}
+} 	

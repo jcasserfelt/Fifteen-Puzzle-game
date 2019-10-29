@@ -105,14 +105,15 @@ public class GameFrame extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
-            JButton tempButton = (JButton) e.getComponent();
-            Move move = new Move(tempButton, board, boardPanel, SIZE);
+            JButton clicked = (JButton) e.getComponent();
+            Move move = new Move(clicked, board, boardPanel, SIZE);
         }
     };
 
     MouseAdapter m2 = new MouseAdapter() {                  //NEW GAME
         @Override
         public void mouseClicked(MouseEvent e) {
+
             boardPanel.removeAll();
             initiateBoard();
             manageLayout();
