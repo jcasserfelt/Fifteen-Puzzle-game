@@ -1,31 +1,33 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 public class Check {
+
+    //VARIABLER
+    static boolean fuskMode = false;
     JButton clicked;
-    JButton[][] board;
-    JPanel boardPanel;
-    int i0, j0, iKlick, jKlick,SIZE;
+    int i0, j0, iKlick, jKlick;
     int kindOfMove;
 
-    public Check (JButton clicked, JButton[][] board, int SIZE){
+    //-------------------------------------------------------------------------------------------------
+    //CONSTRUCTOR
+    public Check (JButton clicked){
         this.clicked = clicked;
-        this.board = board;
-        this.SIZE = SIZE;
         setCheckPoints();
         if(isMovePossible()){
-            Move move = new Move( board, boardPanel, SIZE, i0, j0, iKlick, jKlick, kindOfMove);
+            Move move = new Move(i0, j0, iKlick, jKlick, kindOfMove);
         }
     }
-
-
+    //-------------------------------------------------------------------------------------------------
+    //INSTANSMETODER
     public void setCheckPoints(){
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (board[i][j].getText().equals("0")){
+        for (int i = 0; i < GameFrame.SIZE; i++) {
+            for (int j = 0; j < GameFrame.SIZE; j++) {
+                if (GameFrame.board[i][j].getText().equals("0")){
                     i0 = i;
                     j0 = j;
                 }
-                if (board[i][j].getText().equals(clicked.getText())) {
+                if (GameFrame.board[i][j].getText().equals(clicked.getText())) {
                     iKlick = i;
                     jKlick = j;
                 }
@@ -35,6 +37,9 @@ public class Check {
 
 
     public boolean isMovePossible() {
+        if (fuskMode==true)
+            return true;
+
         if ((iKlick == i0) && (jKlick == (j0 - 1)) ||  //moveright
                 (iKlick == i0) && (jKlick == (j0 + 1)) ||  //moveleft
                 (iKlick == (i0 + 1)) && (jKlick == j0) ||  //moveupp
@@ -58,7 +63,5 @@ public class Check {
         }
         return false;
     }
-
-
 
 }

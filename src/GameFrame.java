@@ -1,29 +1,36 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements ActionListener {
 
-    int SIZE = 4;
-    int SQUARESIZE = SIZE * SIZE;
-    ImageIcon git1 = new ImageIcon("src\\east1.jpg");
-    ImageIcon git2 = new ImageIcon("src\\west1.jpg");
-    JLabel east = new JLabel();
-    JLabel west = new JLabel();
-    JButton newGame = new JButton("NEW GAME");
-    private JButton[][] board = new JButton[SIZE][SIZE];
-    private JPanel boardPanel = new JPanel();
+    //KLASSVARIABLER
+    static int SIZE = 4;
+    static int SQUARESIZE = SIZE * SIZE;
+    static JButton[][] board = new JButton[SIZE][SIZE];
+    static JPanel boardPanel = new JPanel();
+
+
+    //INSTANSVARIABLER
+    private ImageIcon git1 = new ImageIcon("src\\east1.jpg");
+    private ImageIcon git2 = new ImageIcon("src\\west1.jpg");
+    private JLabel east = new JLabel();
+    private JLabel west = new JLabel();
+    private JButton newGame = new JButton("NEW GAME");
+    private JButton fusk = new JButton ("f");
     private JPanel newGamePanel = new JPanel();
     private JPanel eastPanel = new JPanel();
     private JPanel westPanel = new JPanel();
     private JPanel northPanel = new JPanel();
 
-//-------------------------------------------------------------------------------------------------
-
+    //-------------------------------------------------------------------------------------------------
+    //COSTRUCTOR
     public GameFrame() {
         initiateBoard();
         manageLayout();
@@ -31,7 +38,8 @@ public class GameFrame extends JFrame {
         //väntefas: programmet går vidare från MouseEvents
     }
 
-
+    //-------------------------------------------------------------------------------------------------
+    //INSTANSMETODER
     public void initiateBoard() {
         // The list is used for create a shuffled order of 1-16
         ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE);
@@ -55,13 +63,10 @@ public class GameFrame extends JFrame {
         setTitle("Fifteen Puzzle Game");
         setSize(540,440);
         setResizable(false);
-        boardPanel.setLayout(new GridLayout(SIZE, SIZE));
-        newGamePanel.setLayout(new FlowLayout());
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        eastPanel.setSize(100, 440);
-        westPanel.setSize(100, 440);
+        boardPanel.setLayout(new GridLayout(SIZE, SIZE));
         add(boardPanel, BorderLayout.CENTER );
         add(newGamePanel, BorderLayout.SOUTH );
         add(eastPanel, BorderLayout.EAST);
@@ -87,8 +92,11 @@ public class GameFrame extends JFrame {
                 board[i][j].addMouseListener(m1);
             }
         }
-        newGamePanel.add(newGame).setPreferredSize(new Dimension(180,30));
+
+        newGamePanel.add(newGame).setPreferredSize(new Dimension(130,30));
+        newGamePanel.add(fusk).setPreferredSize(new Dimension(40,30));
         newGame.addMouseListener(m2);
+        fusk.addActionListener(this);
     }
 
 
@@ -99,33 +107,41 @@ public class GameFrame extends JFrame {
             board[i][j].setVisible(true);
         }
     }
+    //-------------------------------------------------------------------------------------------------
+    //EVENTS
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == fusk) {
+            if (Check.fuskMode == false) {
+                Check.fuskMode = true;
+                fusk.setBackground(Color.RED);
+            }
+           else {
+                Check.fuskMode = false;
+                fusk.setBackground(new JButton().getBackground());
+            }
 
+        }
+    }
     MouseAdapter m1 = new MouseAdapter() {                  //MOVE
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             JButton clicked = (JButton) e.getComponent();
-            Check check = new Check(clicked, board, SIZE);
+            Check check = new Check(clicked);
         }
     };
 
     MouseAdapter m2 = new MouseAdapter() {                  //NEW GAME
         @Override
         public void mouseClicked(MouseEvent e) {
-
             boardPanel.removeAll();
-            initiateBoard();
-            manageLayout();
-            addButtons();
-            //todo: kanske bättre om vi stänger frame och använder new GameFrame();
+            dispose();
+            new GameFrame();
         }
     };
 
-
-
 }
-
-
 
 

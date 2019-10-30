@@ -2,18 +2,17 @@ import javax.swing.*;
 
 public class Move {
 
+    //INSTANSVARIABLER
     JButton[][] board;
-    JPanel boardPanel;
-    int i0, j0, iKlick, jKlick,SIZE;
+    int i0, j0, iKlick, jKlick;
     int kindOfMove;
     private static final String[] WINSEQUENCE =
             {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15","0"};
 
-
-    public Move(JButton[][] board, JPanel boardPanel, int SIZE, int i0, int j0, int iKlick, int jklick, int kindOfMove){
-        this.board = board;
-        this.SIZE = SIZE;
-        this.boardPanel = boardPanel;
+    //-----------------------------------------------------------------------------------------------
+    //CONSTRUCTOR
+    public Move(int i0, int j0, int iKlick, int jklick, int kindOfMove){
+        this.board = GameFrame.board;
         this.kindOfMove = kindOfMove;
         this.i0 = i0;
         this.j0 = j0;
@@ -22,21 +21,26 @@ public class Move {
         makeAMove();
     }
 
-
+    //-----------------------------------------------------------------------------------------------
+    //INSTANSMETODER
     public void makeAMove() {
+        System.out.println(Check.fuskMode);
+            if (Check.fuskMode == true)
+                replace();
 
-            if (kindOfMove == 1)
-                replace();                  //singleMove
-            else if (kindOfMove == 2) {
-                doubleMove();               //replace + replace
-            }
-            else if (kindOfMove == 3) {     //replace + doubleMove
-                tripleMove();
-            }
+            else
+                if (kindOfMove == 1)
+                    replace();                  //singleMove
+                else if (kindOfMove == 2) {
+                    doubleMove();               //replace + replace
+                } else if (kindOfMove == 3) {   //replace + doubleMove
+                    tripleMove();
+                }
+
             refreshVisables();
             if (isWinState())
                 showWinPanel();
-
+            //Else : tillbaka till väntefas
     }
 
     //todo: fuskMode!
@@ -115,8 +119,8 @@ public class Move {
 
 
     private void refreshVisables() {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
+        for (int i = 0; i < GameFrame.SIZE; i++) {
+            for (int j = 0; j < GameFrame.SIZE; j++) {
                 if (board[i][j].getText().equals("0")) {
                     board[i][j].setVisible(false);
                 } else board[i][j].setVisible(true);
@@ -127,8 +131,8 @@ public class Move {
 
     public boolean isWinState(){
         int counter = 0;
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
+        for (int i = 0; i < GameFrame.SIZE; i++) {
+            for (int j = 0; j < GameFrame.SIZE; j++) {
                 if (!(board[i][j].getText().equals(WINSEQUENCE[counter])))
                     return false;
                 counter++;
@@ -139,10 +143,10 @@ public class Move {
 
 
     public void showWinPanel(){
-        boardPanel.removeAll();
+        GameFrame.boardPanel.removeAll();
         //vi behöver någon sorts "refresh", det enda som jag hittate är det...
-        boardPanel.setVisible(false);
-        boardPanel.setVisible(true);
+        GameFrame.boardPanel.setVisible(false);
+        GameFrame.boardPanel.setVisible(true);
         JOptionPane. showMessageDialog(null,"GRATTIS! DU VANN!");
 
     }
