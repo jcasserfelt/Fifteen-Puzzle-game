@@ -36,7 +36,7 @@ public class Check {
 
 
     public boolean isMovePossible() {
-        if (fuskMode==true)
+        if (fuskMode)
             return true;
 
         if ((iKlick == i0) && (jKlick == (j0 - 1)) ||    //moveright

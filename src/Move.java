@@ -24,7 +24,7 @@ public class Move {
     //-----------------------------------------------------------------------------------------------
     //INSTANSMETODER
     public void makeAMove() {
-            if (Check.fuskMode == true)
+            if (Check.fuskMode)
                 replace();
 
             else
@@ -86,14 +86,14 @@ public class Move {
 
     private void tripleMove() {
 
-        if  ((iKlick == i0) && (jKlick == (j0 - 3))) {  // 2moveright
-            jKlick = jKlick + 2;                        // välj den närmaste till höger
-            replace();                                  // swap med noll
-            j0 = j0 - 1;                                // noll flyttas till vänster
-            this.jKlick = jKlick - 2;                   // välj den ursprunliga klivken
-            doubleMove();                               // swap till den nya nollen
+        if  ((iKlick == i0) && (jKlick == (j0 - 3))) {
+            jKlick = jKlick + 2;
+            replace();
+            j0 = j0 - 1;
+            this.jKlick = jKlick - 2;
+            doubleMove();
         } else if
-        ((iKlick == i0) && (jKlick == (j0 + 3))) {      // 2moveleft...)
+        ((iKlick == i0) && (jKlick == (j0 + 3))) {
             jKlick = jKlick - 2;
             replace();
             j0 = j0 + 1;
