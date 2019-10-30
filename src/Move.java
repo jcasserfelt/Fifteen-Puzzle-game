@@ -42,8 +42,6 @@ public class Move {
             //Else : tillbaka till väntefas
     }
 
-    //todo: fuskMode!
-    //todo: hideZero, refreshVisible. Två metoder som gör samma sak...skulle man inte kunna använda bara en?
 
     private void replace(){
         String tempString;
@@ -51,6 +49,7 @@ public class Move {
         board[i0][j0].setText(board[iKlick][jKlick].getText());
         board[iKlick][jKlick].setText(tempString);
     }
+
 
     private void doubleMove() {
 
@@ -84,16 +83,17 @@ public class Move {
         }
     }
 
+
     private void tripleMove() {
 
-        if  ((iKlick == i0) && (jKlick == (j0 - 3))) {  //2moveright
-            jKlick = jKlick + 2;                        //fört den första till höger
+        if  ((iKlick == i0) && (jKlick == (j0 - 3))) {  // 2moveright
+            jKlick = jKlick + 2;                        // välj den närmaste till höger
             replace();                                  // swap med noll
             j0 = j0 - 1;                                // noll flyttas till vänster
-            this.jKlick = jKlick - 2;                   // vi får den ursprunliga klivken
-            doubleMove();                               // swap til den nya nollen
+            this.jKlick = jKlick - 2;                   // välj den ursprunliga klivken
+            doubleMove();                               // swap till den nya nollen
         } else if
-        ((iKlick == i0) && (jKlick == (j0 + 3))) {      //2moveleft)
+        ((iKlick == i0) && (jKlick == (j0 + 3))) {      // 2moveleft...)
             jKlick = jKlick - 2;
             replace();
             j0 = j0 + 1;
@@ -143,8 +143,7 @@ public class Move {
 
     public void showWinPanel(){
         GameFrame.boardPanel.removeAll();
-        //vi behöver någon sorts "refresh", det enda som jag hittate är det...
-        GameFrame.boardPanel.setVisible(false);
+        GameFrame.boardPanel.setVisible(false);             //Refresh
         GameFrame.boardPanel.setVisible(true);
         JOptionPane. showMessageDialog(null,"GRATTIS! DU VANN!");
 

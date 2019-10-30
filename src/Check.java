@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
 public class Check {
 
@@ -40,24 +39,24 @@ public class Check {
         if (fuskMode==true)
             return true;
 
-        if ((iKlick == i0) && (jKlick == (j0 - 1)) ||  //moveright
-                (iKlick == i0) && (jKlick == (j0 + 1)) ||  //moveleft
-                (iKlick == (i0 + 1)) && (jKlick == j0) ||  //moveupp
-                (iKlick == (i0 - 1)) && (jKlick == j0)) {  //moveDown
+        if ((iKlick == i0) && (jKlick == (j0 - 1)) ||    //moveright
+            (iKlick == i0) && (jKlick == (j0 + 1)) ||    //moveleft
+            (iKlick == (i0 + 1)) && (jKlick == j0) ||    //moveupp
+            (iKlick == (i0 - 1)) && (jKlick == j0)) {    //moveDown
             kindOfMove = 1;
             return true;
         } else if
-        ((iKlick == i0) && (jKlick == (j0 - 2)) ||    //2right
-                        (iKlick == i0) && (jKlick == (j0 + 2)) ||    //2left
-                        (iKlick == (i0 + 2)) && (jKlick == j0) ||    //2up
-                        (iKlick == (i0 - 2)) && (jKlick == j0)) {    //2down
+           ((iKlick == i0) && (jKlick == (j0 - 2)) ||    //2right
+            (iKlick == i0) && (jKlick == (j0 + 2)) ||    //2left
+            (iKlick == (i0 + 2)) && (jKlick == j0) ||    //2up
+            (iKlick == (i0 - 2)) && (jKlick == j0)) {    //2down
             kindOfMove = 2;
             return true;
         } else if
-        ((iKlick == i0) && (jKlick == (j0 - 3)) ||    //3right
-                        (iKlick == i0) && (jKlick == (j0 + 3)) ||    //3left
-                        (iKlick == (i0 + 3)) && (jKlick == j0) ||    //3up
-                        (iKlick == (i0 - 3)) && (jKlick == j0)) {    //3down
+           ((iKlick == i0) && (jKlick == (j0 - 3)) ||    //3right
+            (iKlick == i0) && (jKlick == (j0 + 3)) ||    //3left
+            (iKlick == (i0 + 3)) && (jKlick == j0) ||    //3up
+            (iKlick == (i0 - 3)) && (jKlick == j0)) {    //3down
             kindOfMove = 3;
             return true;
         }

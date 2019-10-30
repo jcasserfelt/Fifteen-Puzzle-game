@@ -32,25 +32,23 @@ public class GameFrame extends JFrame implements ActionListener {
     //-------------------------------------------------------------------------------------------------
     //COSTRUCTOR
     public GameFrame() {
-        initiateBoard();
-        manageLayout();
-        addButtons();
-        //väntefas: programmet går vidare från MouseEvents
+        initiateBoard();                //Skapar int list, blandar den, skapar grid med 16 buttons (i,J) med blandade list
+        manageLayout();                 //border layout med en gridlayout som CENTER
+        addButtons();                   //Fyller grid med buttons, gömmer 0button
+
+        //väntefas: programmet går vidare från EVENTS
     }
 
     //-------------------------------------------------------------------------------------------------
     //INSTANSMETODER
     public void initiateBoard() {
-        // The list is used for create a shuffled order of 1-16
-        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE);
-        for (int i = 0; i < SQUARESIZE; i++) {
-            intialList.add(i, i); // i, i is for index and value
-        }
-        // make the shuffle
-        Collections.shuffle(intialList);
-        // place JButtons in the board array with shuffled text(0-16) on them
+        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE); // The list is used for create a shuffled order of 1-16
+        for (int i = 0; i < SQUARESIZE; i++)
+            intialList.add(i, i);                               // i, i is for index and value
+        Collections.shuffle(intialList);                        // make the shuffle
+
         int counter = 0;
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i < SIZE; i++) {           // place JButtons in the board array with shuffled text(0-16) on them
             for (int j = 0; j < SIZE; j++) {
                 board[i][j] = new JButton(intialList.get(counter).toString());
                 counter++;
@@ -59,7 +57,7 @@ public class GameFrame extends JFrame implements ActionListener {
     }
 
 
-    public void manageLayout() {
+    public void manageLayout() {                                //border layout med en gridlayout som CENTER
         setTitle("Fifteen Puzzle Game");
         setSize(540,440);
         setResizable(false);
@@ -84,7 +82,7 @@ public class GameFrame extends JFrame implements ActionListener {
     }
 
 
-    private void addButtons() {
+    private void addButtons() {                                         //Fyller grid med buttons, skapa listeners
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 boardPanel.add(board[i][j]);
@@ -92,7 +90,6 @@ public class GameFrame extends JFrame implements ActionListener {
                 board[i][j].addMouseListener(m1);
             }
         }
-
         newGamePanel.add(newGame).setPreferredSize(new Dimension(130,30));
         newGamePanel.add(fusk).setPreferredSize(new Dimension(40,30));
         newGame.addMouseListener(m2);
@@ -100,7 +97,7 @@ public class GameFrame extends JFrame implements ActionListener {
     }
 
 
-    private void hideZero (JButton board[][], int i, int j){
+    private void hideZero (JButton board[][], int i, int j){            //gömmer 0button
         if (board[i][j].getText().equals("0")) {
             board[i][j].setVisible(false);
         } else {
@@ -111,7 +108,7 @@ public class GameFrame extends JFrame implements ActionListener {
     //EVENTS
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {            //FUSK
         if (e.getSource() == fusk) {
             if (Check.fuskMode == false) {
                 Check.fuskMode = true;
