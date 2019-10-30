@@ -8,62 +8,81 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements ActionListener {
 
-    int SIZE = 4;
-    int SQUARESIZE = SIZE * SIZE;
-    JButton newGame = new JButton("NEW GAME");
-    private JButton[][] board = new JButton[SIZE][SIZE];
-    private JPanel boardPanel = new JPanel();
+    //KLASSVARIABLER
+    static int SIZE = 4;
+    static int SQUARESIZE = SIZE * SIZE;
+    static JButton[][] board = new JButton[SIZE][SIZE];
+    static JPanel boardPanel = new JPanel();
+
+
+    //INSTANSVARIABLER
+    private ImageIcon git1 = new ImageIcon("src\\east1.jpg");
+    private ImageIcon git2 = new ImageIcon("src\\west1.jpg");
+    private JLabel east = new JLabel();
+    private JLabel west = new JLabel();
+    private JButton newGame = new JButton("NEW GAME");
+    private JButton fusk = new JButton ("f");
     private JPanel newGamePanel = new JPanel();
+    private JPanel eastPanel = new JPanel();
+    private JPanel westPanel = new JPanel();
+    private JPanel northPanel = new JPanel();
 
-
+    //-------------------------------------------------------------------------------------------------
+    //COSTRUCTOR
     public GameFrame() {
-        initiateBoard();
-        manageLayout();
-        addButtons();
-        //väntefas: programmet går vidare från MouseEvents
+        initiateBoard();                //Skapar int list, blandar den, skapar grid med 16 buttons (i,J) med blandade list
+        manageLayout();                 //border layout med en gridlayout som CENTER
+        addButtons();                   //Fyller grid med buttons, gömmer 0button
+
+        //väntefas: programmet går vidare från EVENTS
     }
 
-
+    //-------------------------------------------------------------------------------------------------
+    //INSTANSMETODER
     public void initiateBoard() {
-        // The list is used for create a shuffled order of 1-16
-        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE); //kanske valueList?
-        for (int i = 0; i < SQUARESIZE; i++) {
-            intialList.add(i, i); // i, i is for index and value
-        }
-        // make the shuffle
-        Collections.shuffle(intialList);
+        ArrayList<Integer> intialList = new ArrayList<Integer>(SIZE); // The list is used for create a shuffled order of 1-16
+        for (int i = 0; i < SQUARESIZE; i++)
+            intialList.add(i, i);                               // i, i is for index and value
+        Collections.shuffle(intialList);                        // make the shuffle
 
-        // place JButtons in the board array with shuffled text(0-16) on them
         int counter = 0;
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i < SIZE; i++) {           // place JButtons in the board array with shuffled text(0-16) on them
             for (int j = 0; j < SIZE; j++) {
                 board[i][j] = new JButton(intialList.get(counter).toString());
-                board[i][j].setPreferredSize(new Dimension(100,100));
                 counter++;
             }
         }
     }
 
 
-    public void manageLayout() {
+    public void manageLayout() {                                //border layout med en gridlayout som CENTER
         setTitle("Fifteen Puzzle Game");
-        setSize(420,470);
+        setSize(540,440);
         setResizable(false);
-        boardPanel.setLayout(new GridLayout(4, 4));
-        newGamePanel.setLayout(new FlowLayout());
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        add(boardPanel, BorderLayout.NORTH );
+        boardPanel.setLayout(new GridLayout(SIZE, SIZE));
+        add(boardPanel, BorderLayout.CENTER );
         add(newGamePanel, BorderLayout.SOUTH );
-        boardPanel.setSize(400, 400);
-        newGamePanel.setSize(400,40);
+        add(eastPanel, BorderLayout.EAST);
+        add(westPanel, BorderLayout.WEST);
+        add(northPanel, BorderLayout.NORTH);
+        eastPanel.setBackground(Color.black);
+        westPanel.setBackground(Color.black);
+        northPanel.setBackground(Color.black);
+        boardPanel.setBackground(Color.black);
+        newGamePanel.setBackground(Color.black);
+        east.setIcon(git1);
+        west.setIcon((git2));
+        eastPanel.add(east);
+        westPanel.add(west);
     }
 
 
-    private void addButtons() {
+    private void addButtons() {                                         //Fyller grid med buttons, skapa listeners
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 boardPanel.add(board[i][j]);
@@ -71,26 +90,43 @@ public class GameFrame extends JFrame {
                 board[i][j].addMouseListener(m1);
             }
         }
-        newGamePanel.add(newGame).setPreferredSize(new Dimension(200,20));
+        newGamePanel.add(newGame).setPreferredSize(new Dimension(130,30));
+        newGamePanel.add(fusk).setPreferredSize(new Dimension(40,30));
         newGame.addMouseListener(m2);
+        fusk.addActionListener(this);
     }
-//ta bort
 
-    private void hideZero (JButton board[][], int i, int j){
+
+    private void hideZero (JButton board[][], int i, int j){            //gömmer 0button
         if (board[i][j].getText().equals("0")) {
             board[i][j].setVisible(false);
         } else {
             board[i][j].setVisible(true);
         }
     }
+    //-------------------------------------------------------------------------------------------------
+    //EVENTS
 
+    @Override
+    public void actionPerformed(ActionEvent e) {            //FUSK
+        if (e.getSource() == fusk) {
+            if (Check.fuskMode == false) {
+                Check.fuskMode = true;
+                fusk.setBackground(Color.RED);
+            }
+           else {
+                Check.fuskMode = false;
+                fusk.setBackground(new JButton().getBackground());
+            }
 
+        }
+    }
     MouseAdapter m1 = new MouseAdapter() {                  //MOVE
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
-            JButton tempButton = (JButton) e.getComponent();
-            Move move = new Move(tempButton, board, boardPanel, SIZE);
+            JButton clicked = (JButton) e.getComponent();
+            Check check = new Check(clicked);
         }
     };
 
@@ -98,17 +134,11 @@ public class GameFrame extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             boardPanel.removeAll();
-            initiateBoard();
-            manageLayout();
-            addButtons();
-            //todo: kanske bättre om vi stänger frame och använder new GameFrame();
+            dispose();
+            new GameFrame();
         }
     };
 
-
-
 }
-
-
 
 

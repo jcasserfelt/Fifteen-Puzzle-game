@@ -4,5 +4,4 @@ public class TestClass {
         GameFrame gf = new GameFrame();
     }
 
-    // DSLFJSDFJ
 }
