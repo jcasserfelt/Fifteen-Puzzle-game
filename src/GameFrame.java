@@ -97,7 +97,7 @@ public class GameFrame extends JFrame implements ActionListener {
     }
 
 
-    private void hideZero (JButton board[][], int i, int j){            //gömmer 0button
+    private void hideZero (JButton[][] board, int i, int j){            //gömmer 0button
         if (board[i][j].getText().equals("0")) {
             board[i][j].setVisible(false);
         } else {
@@ -110,7 +110,7 @@ public class GameFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {            //FUSK
         if (e.getSource() == fusk) {
-            if (Check.fuskMode == false) {
+            if (!Check.fuskMode) {
                 Check.fuskMode = true;
                 fusk.setBackground(Color.RED);
             }
