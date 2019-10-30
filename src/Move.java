@@ -24,7 +24,6 @@ public class Move {
     //-----------------------------------------------------------------------------------------------
     //INSTANSMETODER
     public void makeAMove() {
-        System.out.println(Check.fuskMode);
             if (Check.fuskMode == true)
                 replace();
 
